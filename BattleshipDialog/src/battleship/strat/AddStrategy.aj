@@ -1,23 +1,25 @@
 package battleship.strat;
 
 import java.awt.BorderLayout;
-import java.awt.Dimension;
 import java.awt.FlowLayout;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
-import org.aspectj.lang.JoinPoint;
-
 import battleship.BattleshipDialog;
 
 privileged public aspect AddStrategy {
+	
+	 /** Rename the button to Practice */
 	pointcut constructor(): execution(BattleshipDialog.new(*));
 	pointcut draw(): execution(JPanel BattleshipDialog.makeControlPane());
 	after(BattleshipDialog a): constructor() && target(a){
 		a.playButton.setText("Practice");
 	}
+	
+
+	 /** Create a button That allows practice content */
 	JPanel around(BattleshipDialog a): draw() && target(a){
 		JPanel content = new JPanel(new BorderLayout());
         JPanel buttons = new JPanel(new FlowLayout(FlowLayout.LEFT));
